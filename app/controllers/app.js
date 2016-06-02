@@ -16,6 +16,6 @@ barsquareApp.config(['$locationProvider' ,'$routeProvider',
   }
 ]);
 // Define the main controller on the barsquare module
-barsquareApp.controller('MainController', function MainController($scope) {
+barsquareApp.controller('MainController', function MainController($scope, $http) {
   $scope.name = 'world';
 });
