@@ -4,14 +4,26 @@
   <head>
     <meta charset="utf-8">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>Barsquare :: Back End Basejump FreeCodeCamp</title>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script><!-- load angular -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-route.min.js"></script><!-- load ng-route -->
-    <script src="/controllers/app.js"></script><!-- main controller -->
-    <link href="/public/css/spectre.css" rel="stylesheet"/><!-- spectre framework -->
+    <title>BarSquare :: Back End Basejump FreeCodeCamp</title>
+    <script src="/public/js/angular.min.js"></script><!-- load angular -->
+    <script src="/public/js/angular-route.min.js"></script><!-- load ng-route -->
+    <script src="/controllers/barSquare.client.js"></script><!-- main controller -->
+    <link href="/public/css/spectre.min.css" rel="stylesheet"/><!-- spectre framework -->
+    <link href="/public/css/main.css" rel="stylesheet"><!-- main style -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet"/><!-- font awesome -->
   </head>
   <body ng-controller="MainController">
+    <header class="navbar">
+      <section class="navbar-section">
+        <a href="#/" class="btn btn-link btn-lg"><i class="fa fa-bars"></i></a>
+        <a href="#/" class="navbar-brand">BarSquare</a>
+      </section>
+      <section class="navbar-section">
+        <a href="#" class="btn btn-link">Last searchs</a>
+        <span class="hide-sm">Welcome, Do I know you?</span>
+        <a href="/login/twitter" class="btn btn-primary"><i aria-hidden="true" class="fa fa-twitter"></i> Sign In</a>
+      </section>
+    </header>
     <div ng-view></div>
   </body>
 </html>

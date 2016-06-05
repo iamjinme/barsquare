@@ -1,204 +1,78 @@
-/********* Fonts **********/
-
-@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Roboto'), local('Roboto-Regular'), url('../fonts/Roboto-Regular.ttf') format('truetype');
+.navbar {
+  background: #795548;
 }
 
-@font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 500;
-  src: local('Roboto Medium'), local('Roboto-Medium'), url('../fonts/Roboto-Medium.ttf') format('truetype');
+.navbar span {
+  color: #fff;
+  margin-right: 10px;
 }
 
-/****** Main Styling ******/
-
-body {
-	font-family: 'Roboto', sans-serif;
-	font-size: 16px;
-	margin: 0;
-	padding: 0;
+.main {
+  background-image: url("//i.imgur.com/wR71gDX.jpg");
+  text-align: center;
+  padding: 10px 0 10px 0;
+  height: 300px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
-header {
-	color: #00BCD4;
-	height: 56px;
-	margin: 0 0 14px 0;
-	text-align: center;
+.title {
+  color: #727272;
 }
 
-p {
-	margin: 8px 0 0 0;
+.subtitle {
+  color: #E3FFFB;
+  font-weight: bold;
+  text-shadow: 1px 0 0 #775346, -1px 0 0 #775346, 0 1px 0 #775346, 0 -1px 0 #775346, 1px 1px #775346, -1px -1px 0 #775346, 1px -1px 0 #775346, -1px 1px 0 #775346;
 }
 
-.container p {
-	text-align: center;
-	padding: 0;
+.credits {
+  text-decoration: none;
+  background: #E0995E;
+  color: #fff;
+  padding: 5px 10px 5px 10px;
+  border-radius: 50px;
+  font-weight: bold;
 }
 
-/****** Header Styling ******/
-
-header p {
-	margin: 16px 0 5px 0;
+.empty-title {
+  color: #44B39B;
 }
 
-.menu {
-	text-decoration: none;
-	padding: 6px;
-	margin: 0;
-	color: #727272;
+.empty .fa-bolt {
+  color: #FFC107;
 }
 
-.menu:visited {
-	color: #727272;
+.empty .fa-twitter {
+  color: #1976D2;
 }
 
-.menu:hover {
-	color: #FFA000;
+.empty .fa-mobile {
+  color: #212121;
 }
 
-.menu:active {
-	color: #FF630D;
+.green {
+  color: #44B39B;
 }
 
-header a ~ p {
-	margin: 0;
-	padding: 0;
-	display: inline;
-	color: #ECEFF1;
+#poll {
+  text-align: center;
 }
 
-#display-name {
-	font-weight: 400;
+.navbar .btn-link:hover, .navbar-brand:hover {
+  color: #fff;
 }
 
-/****** Login Styling ******/
-
-.login {
-	margin: 86px auto 0 auto;
-	text-align: center;
+#poll .btn-link:hover {
+  color: #727272;
 }
 
-#login-btn {
-	width: 225px;
-	padding: 7px 5px;
+.table {
+  margin: 0 auto;
 }
 
-.btn p {
-	margin: 8px 0 0 0;
-	padding: 0;
-}
-
-.btn > img {
-	float: left;
-	margin-left: 10px
-}
-
-/****** Logo Div Styling ******/
-
-img {
-	margin: 0 auto;
-	display: block;
-}
-
-.clementine-text { /* Styling for the Clementine.js text */
-	padding: 0;
-	margin: -25px 0 0 0;
-	font-weight: 500;
-	font-size: 60px;
-	color: #FFA000;
-}
-
-/****** Click Styling ******/
-
-.btn-container {	/* Styling for the div that contains the buttons */
-	margin: -10px auto 0 auto;
-	text-align: center;
-}
-
-.btn {	/* Styling for buttons */
-	margin: 0 8px;
-	color: white;
-	background-color: #00BCD4;
-	display: inline-block;
-	border: 0;
-	font-size: 14px;
-	border-radius: 3px;
-	padding: 10px 5px;
-	width: 100px;
-	font-weight: 500;
-}
-
-.btn:focus {	/* Remove outline when hovering over button */
-	outline: none;
-}
-
-.btn:active {	/* Scale the button down by 10% when clicking on button */
-	transform: scale(0.9, 0.9);
-	-webkit-transform: scale(0.9, 0.9);
-	-moz-transform: scale(0.9, 0.9);
-}
-
-.btn-delete {	/* Styling for delete button */
-	background-color: #ECEFF1;
-	color: #212121;
-}
-
-#click-nbr {
-	font-weight: 400;
-}
-
-/****** Profile Styling ******/
-
-.github-profile {
-	width: 350px;
-	height: 200px;
-	border-radius: 3px;
-	margin: 86px auto 0 auto;
-	background-color: #EEE;
-	text-align: center;
-	color: #000;
-}
-
-.github-profile p:first-child {
-	padding-top: 16px;
-}
-
-.github-profile p:nth-child(5) {
-	margin-bottom: 16px
-}
-
-.github-profile p {
-	margin: 0 0 0 16px;
-	text-align: left;
-}
-
-.profile-value {
-	font-weight: 400;
-}
-
-span {
-	font-weight: 500;
-}
-
-.github-profile > img {
-	padding-top: 16px;
-	margin-bottom: 16px;
-}
-
-.github-profile .menu:hover {
-	color: #FFA000;
-}
-
-.github-profile .menu:active {
-	color: #FF630D;
-}
-
-#menu-divide {
-	color: #FFFFFF;
-	display: inline;
-	margin: 0;
+.toast {
+  text-align: left;
 }
