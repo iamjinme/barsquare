@@ -1,5 +1,6 @@
 'use strict';
 
+var url = require("url");
 var request = require('request');
 
 function BarSquare() {
@@ -8,7 +9,7 @@ function BarSquare() {
   var foursquare_client_secret = process.env.FOURSQUARE_CLIENT_SECRET;
   var foursquare_path = 'https://api.foursquare.com/v2/venues/';
   var foursquare_version = '20160605';
-  var foursquare_size_photo = '300x200'
+  var foursquare_size_photo = '350x200'
   var self = this;
 
   this.countLatest = function() {
@@ -31,7 +32,9 @@ function BarSquare() {
         var data = JSON.parse(body).response.venue;
         bars[i].url = data.shortUrl;
         if(data.tips.count) {
-          bars[i].tip = data.tips.groups[0].items[getRandom(data.tips.groups[0].items.length)].text;
+          var tip = data.tips.groups[0].items[getRandom(data.tips.groups[0].items.length)];
+          bars[i].tip = tip.text;
+          bars[i].author = tip.user.firstName + ' ' + (tip.user.lastName || '');
         }
         if(data.photos.count) {
           var photo = data.photos.groups[0].items[getRandom(data.photos.groups[0].items.length)];
@@ -51,6 +54,8 @@ function BarSquare() {
   }
 
   this.getSearch = function(req, res) {
+    var query = url.parse(req.url, true).query
+    var offset = parseInt(query.offset || "0");    
     var location = req.params.location
     var category = '4bf58dd8d48988d116941735';
     var api_url  = foursquare_path + 'search';
@@ -70,11 +75,11 @@ function BarSquare() {
                        "address": data[i].location.address,
                        "checkins": data[i].stats.checkinsCount,
                        "tip": "No tips found",
-                       "photo": data[i].categories[0].icon.prefix + foursquare_size_photo + data[i].categories[0].icon.suffix
+                       "photo": "/public/img/photo_default.jpg"
           });
         };
         bars = bars.filter(function(value, index) {
-          return index < 5;
+          return index < 4;
         })
         getInfo(bars, 0, function(bars){
           res.json(bars);

@@ -5,13 +5,47 @@
     <div class="column col-md-4 centered">
       <form>
         <div class="input-group">
-          <input type="text" class="form-input" placeholder="Where are you?" />
-          <button class="btn btn-primary input-group-btn">Search</button>
+          <input type="text" class="form-input" ng-model="where" placeholder="Where are you?" />
+          <button class="btn btn-primary input-group-btn" id="btn_search" ng-click="getSearch()">Search</button>
         </div>
       </form>
     </div>
   </div>
 </div>
+<div class="container" id="search_results">
+  <div class="columns" ng-repeat="search in results">
+    <div class="column col-md-3" ng-repeat="venue in search">
+      <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">{{ venue.name }}</h4>
+              <h6 class="card-meta">{{ venue.address }}</h6>
+          </div>
+          <div class="card-image">
+              <img class="img-responsive" ng-src="{{ venue.photo }}" />
+          </div>
+          <div class="card-body">
+            <span class="badge" data-badge="{{ venue.checkins }}">Checkins </span>
+            <blockquote>
+                <p>{{ venue.tip }}</p>
+                <cite ng-if="venue.author">- {{ venue.author }}</cite>
+            </blockquote>
+          </div>
+          <div class="card-footer">
+              <div class="btn-group btn-group-block">
+                  <a class="btn btn-primary" href="{{ venue.url }}" target="_blank">Show</a>
+                  <button class="btn">32 Will go</button>
+              </div>
+          </div><!-- card footer -->
+      </div><!-- card -->
+    </div><!-- column col -->
+  </div><!-- columns -->
+  <div ng-if="results.length" class="columns text-center">
+    <div class="column col-md-4 centered">
+      <button class="btn" ng-click="moreResults()">More results</button>
+    </div>
+  </div>
+</div><!-- container -->
+<!--div ng-include="'/views/search.html'"></div-->
 <!-- createToDo() WILL CREATE NEW TODOS -->
 <!-- button type="submit" class="btn btn-primary" ng-click="addClick()">Add</button>
 <a class="btn" href="#other">Go to other</a -->

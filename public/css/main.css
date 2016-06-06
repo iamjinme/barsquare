@@ -18,8 +18,16 @@
   background-size: cover;
 }
 
+form {
+  padding: 0 10px 0 10px;
+}
+
 .title {
   color: #727272;
+}
+
+.card-title {
+  color: #E91E63;
 }
 
 .subtitle {

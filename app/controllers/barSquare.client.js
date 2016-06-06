@@ -17,16 +17,29 @@ barsquareApp.config(['$locationProvider' ,'$routeProvider',
 // Define the main controller on the barsquare module
 barsquareApp.controller('MainController', function MainController($scope, $http) {
   $scope.name = 'world';
-  // when landing on the page, get all todos and show them
-  $http.get('/api/todos')
-    .success(function(data) {
-      $scope.todos = data;
-          console.log(data);
-    })
-    .error(function(data) {
-      console.log('Error: ' + data);
-    });
-  $scope.addClick = function() {
-    console.log('Add click');
+  $scope.results = [];
+  // Mini jQuery
+  $ = function(element) {
+    return angular.element(document.querySelector(element));
   }
+  // More results
+  $scope.moreResults = function() {
+    console.log('more', this.results.length);
+  }
+  // Search near at "where"
+  $scope.getSearch = function() {
+    if (this.where) {
+      $("#btn_search").addClass('loading');
+      $http.get('/api/search/' + this.where)
+        .success(function(data) {
+          $scope.results.push(data);
+          $("#btn_search").removeClass('loading');
+        })
+        .error(function(data) {
+          console.log('Error: ' + data);
+          $("#btn_search").removeClass('loading');
+        });
+    }
+  };
+  // More functions
 });
