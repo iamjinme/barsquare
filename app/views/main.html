@@ -39,9 +39,9 @@
       </div><!-- card -->
     </div><!-- column col -->
   </div><!-- columns -->
-  <div ng-if="results.length" class="columns text-center">
+  <div ng-if="results.length && results.length < 40 && more" class="columns text-center">
     <div class="column col-md-4 centered">
-      <button class="btn" ng-click="moreResults()">More results</button>
+      <button id="btn_more" class="btn" ng-click="moreResults()">More results</button>
     </div>
   </div>
 </div><!-- container -->

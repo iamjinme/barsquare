@@ -9,7 +9,8 @@ function BarSquare() {
   var foursquare_client_secret = process.env.FOURSQUARE_CLIENT_SECRET;
   var foursquare_path = 'https://api.foursquare.com/v2/venues/';
   var foursquare_version = '20160605';
-  var foursquare_size_photo = '350x200'
+  var foursquare_size_photo = '350x200';
+  var foursquare_limit = 40;
   var self = this;
 
   this.countLatest = function() {
@@ -55,19 +56,28 @@ function BarSquare() {
 
   this.getSearch = function(req, res) {
     var query = url.parse(req.url, true).query
-    var offset = parseInt(query.offset || "0");    
-    var location = req.params.location
-    var category = '4bf58dd8d48988d116941735';
+    var offset = parseInt(query.offset || "0");
+    var location = req.params.location;
+    //var category = '4bf58dd8d48988d116941735';
+    var category = '4d4b7105d754a06376d81259';
+    var bars = [];
     var api_url  = foursquare_path + 'search';
         api_url += '?near=' + location;
         api_url += '&categoryId=' + category;
+        api_url += '&limit=' + foursquare_limit;
         api_url += '&v=' + foursquare_version;
         api_url += '&client_id=' + foursquare_client_id;
         api_url += '&client_secret=' + foursquare_client_secret;
+    // Check Limit and offset
+    console.log(api_url);
+    console.log(offset, location)
+    if (offset >= foursquare_limit) {
+      res.json(bars);
+      return;
+    }
     // Call API Foursquare
     request(api_url, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        var bars = [];
         var data = JSON.parse(body).response.venues;
         for (var i in data) {
           bars.push({ "id": data[i].id,
@@ -78,14 +88,20 @@ function BarSquare() {
                        "photo": "/public/img/photo_default.jpg"
           });
         };
+        console.log(bars.length);
         bars = bars.filter(function(value, index) {
-          return index < 4;
-        })
-        getInfo(bars, 0, function(bars){
-          res.json(bars);
+          return ((index >= offset) && (index < (offset + 4)));
         });
+        console.log(bars.length);
+        if (bars.length) {
+          getInfo(bars, 0, function(bars){
+            res.json(bars);
+          });
+        } else {
+          res.json(bars);
+        }
       } else {
-        res.json({'error': true, 'message': "Couldn't geocode param near"})
+        res.json({'error': true, 'message': "Couldn't geocode param near: " + location})
       };
     });
   };

@@ -1,9 +1,10 @@
 'use strict';
 
 var path = process.cwd();
+var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 var BarSquare = require(path + '/app/controllers/barSquare.server.js');
 
-module.exports = function (app) {
+module.exports = function (app, passport) {
 
   var barSquare = new BarSquare();
 
@@ -11,6 +12,21 @@ module.exports = function (app) {
 		.get(function (req, res) {
 			res.sendFile(path + '/public/index.html');
 		});
+
+  app.get('/login/twitter',
+    passport.authenticate('twitter'));
+
+  app.get('/login/twitter/return',
+    passport.authenticate('twitter', { failureRedirect: '/' }),
+    function(req, res) {
+      res.redirect('/admin');
+    });
+
+  app.get('/logout',
+    function(req, res) {
+      req.session.destroy();
+      res.redirect('/');
+    });
 
   app.route('/api/search/:location')
     .get(barSquare.getSearch);
