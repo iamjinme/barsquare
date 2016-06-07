@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>BarSquare :: Back End Basejump FreeCodeCamp</title>
+    <title><%= title %></title>
     <script src="/public/js/angular.js"></script><!-- load angular -->
     <script src="/public/js/angular-route.min.js"></script><!-- load ng-route -->
     <script src="/controllers/barSquare.client.js"></script><!-- main controller -->
@@ -20,8 +20,13 @@
       </section>
       <section class="navbar-section">
         <a href="#" class="btn btn-link">Last searchs</a>
-        <span class="hide-sm">Welcome, Do I know you?</span>
-        <a href="/login/twitter" class="btn btn-primary"><i aria-hidden="true" class="fa fa-twitter"></i> Sign In</a>
+        <% if (!user) { %>
+          <span class="hide-sm">Welcome, Do I know you?</span>
+          <a href="/login/twitter" class="btn btn-primary"><i aria-hidden="true" class="fa fa-twitter"></i> Sign In</a>
+        <% } else { %>
+          <span class="hide-sm">Welcome <%= user.twitter.name %> !</span>
+          <a href="/logout" class="btn btn-primary"><i aria-hidden="true" class="fa fa-cog"></i> Logout</a>
+        <% } %>
       </section>
     </header>
     <div ng-view></div>
