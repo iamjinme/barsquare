@@ -10,7 +10,7 @@ module.exports = function (app, passport) {
 
   app.route('/')
 		.get(function (req, res) {
-			res.sendFile(path + '/public/index.html');
+      res.render('index', { title: 'BarSquare :: Back End Basejump FreeCodeCamp', user: req.user});
 		});
 
   app.get('/login/twitter',

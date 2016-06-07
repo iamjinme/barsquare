@@ -54,6 +54,9 @@ passport.deserializeUser(function(obj, cb) {
 
 var app = express();
 
+app.set('views', __dirname + '/app/views');
+app.set('view engine', 'ejs');
+
 var mongo_uri = process.env.MONGO_URI || 'mongodb://localhost/test';
 mongoose.connect(mongo_uri);
 
