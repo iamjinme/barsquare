@@ -19,6 +19,14 @@ barsquareApp.controller('MainController', function MainController($scope, $http)
   $scope.name = 'world';
   $scope.results = [];
   $scope.more = true;
+  $scope.user_id = false;
+  // Detect User login
+  $http.get('/api/islogged')
+    .success(function(user) {
+      if (user.islogged) {
+        $scope.user_id = user.id;
+      }
+    });
   // Mini jQuery
   $ = function(element) {
     return angular.element(document.querySelector(element));
