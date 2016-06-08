@@ -31,4 +31,13 @@ module.exports = function (app, passport) {
   app.route('/api/search/:location')
     .get(barSquare.getSearch);
 
+  app.route('/api/islogged')
+    .get(function(req, res) {
+      if (typeof req.user !== 'undefined') {
+        res.json({islogged: true, id: req.user._id});
+      } else {
+        res.json({islogged: false});
+      }
+    });
+
 }
