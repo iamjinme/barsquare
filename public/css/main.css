@@ -18,6 +18,10 @@
   background-size: cover;
 }
 
+.chip-sm {
+  margin-right: 3px;
+}
+
 form {
   padding: 0 10px 0 10px;
 }
@@ -61,26 +65,6 @@ form {
   color: #212121;
 }
 
-.green {
-  color: #44B39B;
-}
-
-#poll {
-  text-align: center;
-}
-
 .navbar .btn-link:hover, .navbar-brand:hover {
   color: #fff;
-}
-
-#poll .btn-link:hover {
-  color: #727272;
-}
-
-.table {
-  margin: 0 auto;
-}
-
-.toast {
-  text-align: left;
 }
