@@ -75,5 +75,15 @@ barsquareApp.controller('MainController', function MainController($scope, $http)
         });
     }
   };
-  // More functions
+  // CheckIn
+  $scope.checkIn = function(venue_id) {
+    console.log($scope.user_id + ' check in ' + venue_id);
+    $http.post('/api/checkin', {'venue_id': venue_id})
+      .success(function(data) {
+        console.log(data);
+      })
+      .error(function(data) {
+        console.log('Error: ' + data);
+      });
+  };
 });

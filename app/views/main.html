@@ -33,7 +33,8 @@
           <div class="card-footer">
               <div class="btn-group btn-group-block">
                   <a class="btn btn-primary" href="{{ venue.url }}" target="_blank">Show</a>
-                  <button class="btn">32 Will go</button>
+                  <a class="btn" ng-if="!user_id" href="/login/twitter">{{ venue.checkins }} Will go</a>
+                  <button class="btn" ng-if="user_id" href="#" ng-click="checkIn(venue._id)">{{ venue.checkins }} Will go</button>
               </div>
           </div><!-- card footer -->
       </div><!-- card -->

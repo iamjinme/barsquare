@@ -31,6 +31,10 @@ module.exports = function (app, passport) {
   app.route('/api/search/:location')
     .get(barSquare.getSearch);
 
+  app.post('/api/checkin',
+    ensureLoggedIn('/'),
+    barSquare.checkIn);
+
   app.route('/api/islogged')
     .get(function(req, res) {
       if (typeof req.user !== 'undefined') {

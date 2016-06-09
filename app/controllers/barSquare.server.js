@@ -3,6 +3,8 @@
 var url = require("url");
 var request = require('request');
 
+var Venue = require('../models/venues.js');
+
 function BarSquare() {
 
   var foursquare_client_id = process.env.FOURSQUARE_CLIENT_ID;
@@ -24,7 +26,7 @@ function BarSquare() {
   }
 
   var getInfo = function(bars, i, callback) {
-    var api_url  = foursquare_path + bars[i].id;
+    var api_url  = foursquare_path + bars[i]._id;
         api_url += '?v=' + foursquare_version;
         api_url += '&client_id=' + foursquare_client_id;
         api_url += '&client_secret=' + foursquare_client_secret;
@@ -41,6 +43,13 @@ function BarSquare() {
           var photo = data.photos.groups[0].items[getRandom(data.photos.groups[0].items.length)];
           bars[i].photo = photo.prefix + foursquare_size_photo + photo.suffix;
         }
+        // Save Venue
+        var venue = bars[i];
+        var options = { upsert: true, new: true, setDefaultsOnInsert: true };
+    		Venue.findOneAndUpdate({ '_id': venue._id }, venue, options, function(err, result) {
+    			if (err) throw err;
+        });
+        // Continue
         i++;
         if (i < bars.length) {
           getInfo(bars, i, callback);
@@ -80,7 +89,7 @@ function BarSquare() {
       if (!error && response.statusCode == 200) {
         var data = JSON.parse(body).response.venues;
         for (var i in data) {
-          bars.push({ "id": data[i].id,
+          bars.push({ "_id": data[i].id,
                        "name": data[i].name,
                        "address": data[i].location.address,
                        "checkins": data[i].stats.checkinsCount,
@@ -103,6 +112,22 @@ function BarSquare() {
       } else {
         res.json({'error': true, 'message': "Couldn't geocode param near: " + location})
       };
+    });
+  };
+
+  this.checkIn = function(req, res) {
+    var venue_id = req.body.venue_id;
+    var date = new Date();
+    Venue.findOne({ '_id': venue_id }, function(err, venue) {
+      console.log(venue);
+      if (err) throw err;
+      if (venue) {
+        venue.visits.push({date: date, user_id: req.user._id});
+        venue.save();
+        res.json({'count': venue.visits.length});
+      } else {
+        res.json({'error': true, 'message': "Venue not found"});
+      }
     });
   };
 
