@@ -8,16 +8,13 @@ barsquareApp.config(['$locationProvider' ,'$routeProvider',
       when('/', {
         templateUrl: '/views/main.html'
       }).
-      when('/other', {
-        templateUrl: '/views/other.html'
-      }).
       otherwise('/');
   }
 ]);
 // Define the main controller on the barsquare module
 barsquareApp.controller('MainController', function MainController($scope, $http) {
-  $scope.name = 'world';
   $scope.results = [];
+  $scope.latest = [];
   $scope.more = true;
   $scope.user_id = false;
   // Detect User login
@@ -27,20 +24,12 @@ barsquareApp.controller('MainController', function MainController($scope, $http)
         $scope.user_id = user.id;
       }
     });
-  // Locations
-  $scope.latest = [
-    { name: 'Crime', id: 1 },
-    { name: 'Drama', id: 2 },
-    { name: 'Biography', id: 3 },
-    { name: 'Mystery', id: 4 }
-  ];
   // Mini jQuery
   $ = function(element) {
     return angular.element(document.querySelector(element));
   };
   // Clear buttons
   $scope.closeChip = function(element) {
-    console.log(element);
     $('#' + element).parent().addClass('hide');
   };
   // Go bottom
@@ -95,6 +84,16 @@ barsquareApp.controller('MainController', function MainController($scope, $http)
         if (!data.error) {
           $('#btn_' + venue_id).text(data.count + ' Will go');
         }
+      })
+      .error(function(data) {
+        console.log('Error: ' + data);
+      });
+  };
+  // Latest locations
+  $scope.getLatest = function() {
+    $http.get('/api/search/latest')
+      .success(function(data) {
+        $scope.latest = data;
       })
       .error(function(data) {
         console.log('Error: ' + data);

@@ -4,6 +4,7 @@ var url = require("url");
 var request = require('request');
 
 var Venue = require('../models/venues.js');
+var Location = require('../models/location.js');
 
 function BarSquare() {
 
@@ -14,12 +15,6 @@ function BarSquare() {
   var foursquare_size_photo = '350x200';
   var foursquare_limit = 40;
   var self = this;
-
-  this.countLatest = function() {
-    Latest.count({}, function( err, count){
-      return count;
-    });
-  };
 
   var getRandom = function(max) {
     return Math.floor(Math.random() * max);
@@ -69,7 +64,6 @@ function BarSquare() {
     var offset = parseInt(query.offset || "0");
     var location = req.params.location;
     var category = '4bf58dd8d48988d116941735';
-    // var category = '4d4b7105d754a06376d81259';
     var bars = [];
     var api_url  = foursquare_path + 'search';
         api_url += '?near=' + location;
@@ -83,6 +77,8 @@ function BarSquare() {
       res.json(bars);
       return;
     }
+    // Save search
+    self.saveSearch(location);
     // Call API Foursquare
     request(api_url, function (error, response, body) {
       if (!error && response.statusCode == 200) {
@@ -147,19 +143,19 @@ function BarSquare() {
     });
   };
 
-  this.saveSearch = function(term) {
-    var last = { 'term': term, 'when': new Date() };
+  this.saveSearch = function(where) {
+    var last = { 'name': where, 'when': new Date() };
     var options = { upsert: true, new: true, setDefaultsOnInsert: true };
-		Latest.findOneAndUpdate({ 'term': term }, last, options, function(err, result) {
+		Location.findOneAndUpdate({ 'name': where }, last, options, function(err, result) {
 			if (err) { return false; }
     });
   };
 
   this.getLatest = function(req, res) {
-    Latest
-      .find({}, { _id: false, __v: false })
+    Location
+      .find({}, { __v: false })
       .sort({'when': -1})
-      .limit(10)
+      .limit(5)
       .exec(function(err, latest) {
         res.json(latest);
       });

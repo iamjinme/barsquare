@@ -28,6 +28,9 @@ module.exports = function (app, passport) {
       res.redirect('/');
     });
 
+  app.route('/api/search/latest')
+    .get(barSquare.getLatest);
+
   app.route('/api/search/:location')
     .get(barSquare.getSearch);
 

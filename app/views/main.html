@@ -15,7 +15,7 @@
     <div class="column">
       <div class="chip-sm" ng-repeat="location in latest">
           <span class="chip-name">{{ location.name }}</span>
-          <button class="btn btn-clear" id="{{ 'loc_' + location.id }}" ng-click="closeChip('loc_' + location.id)"></button>
+          <button class="btn btn-clear" id="{{ 'loc_' + location._id }}" ng-click="closeChip('loc_' + location._id)"></button>
       </div>
     </div>
   </div>
