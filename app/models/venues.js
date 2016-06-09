@@ -9,7 +9,6 @@ var Visits = new Schema({
 });
 
 var Venue = new Schema({
-	id: String,
 	name: String,
 	address: String,
 	checkins: Number,
