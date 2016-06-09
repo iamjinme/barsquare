@@ -36,26 +36,27 @@ function BarSquare() {
         bars[i].url = data.shortUrl;
         if(data.tips.count) {
           var tip = data.tips.groups[0].items[getRandom(data.tips.groups[0].items.length)];
-          bars[i].tip = tip.text;
-          bars[i].author = tip.user.firstName + ' ' + (tip.user.lastName || '');
+          bars[i].tip.text = tip.text;
+          bars[i].tip.author = tip.user.firstName + ' ' + (tip.user.lastName || '');
         }
         if(data.photos.count) {
           var photo = data.photos.groups[0].items[getRandom(data.photos.groups[0].items.length)];
           bars[i].photo = photo.prefix + foursquare_size_photo + photo.suffix;
         }
-        // Save Venue
+        // Save Venue on database
         var venue = bars[i];
         var options = { upsert: true, new: true, setDefaultsOnInsert: true };
     		Venue.findOneAndUpdate({ '_id': venue._id }, venue, options, function(err, result) {
     			if (err) throw err;
+          bars[i] = result;
+          i++;
+          if (i < bars.length) {
+            getInfo(bars, i, callback);
+          } else {
+            callback(bars);
+          }
         });
         // Continue
-        i++;
-        if (i < bars.length) {
-          getInfo(bars, i, callback);
-        } else {
-          callback(bars);
-        }
       } else {
         console.log(error);
         callback([]);
@@ -93,7 +94,7 @@ function BarSquare() {
                        "name": data[i].name,
                        "address": data[i].location.address,
                        "checkins": data[i].stats.checkinsCount,
-                       "tip": "No tips found",
+                       "tip": { "text": "No tips found", "author": "" },
                        "photo": "/public/img/photo_default.jpg"
           });
         };
@@ -119,7 +120,6 @@ function BarSquare() {
     var venue_id = req.body.venue_id;
     var date = new Date();
     Venue.findOne({ '_id': venue_id }, function(err, venue) {
-      console.log(venue);
       if (err) throw err;
       if (venue) {
         venue.visits.push({date: date, user_id: req.user._id});

@@ -12,8 +12,10 @@ var Venue = new Schema({
 	name: String,
 	address: String,
 	checkins: Number,
-	tip_text: String,
-  tip_author: String,
+	tip: {
+    text: String,
+    author: String
+  },
   url: String,
   photo: String,
 	visits: [Visits]
