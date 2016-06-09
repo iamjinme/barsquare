@@ -80,7 +80,9 @@ barsquareApp.controller('MainController', function MainController($scope, $http)
     console.log($scope.user_id + ' check in ' + venue_id);
     $http.post('/api/checkin', {'venue_id': venue_id})
       .success(function(data) {
-        console.log(data);
+        if (data.count) {
+          $('#btn_' + venue_id).text(data.count + ' Will go');
+        }
       })
       .error(function(data) {
         console.log('Error: ' + data);

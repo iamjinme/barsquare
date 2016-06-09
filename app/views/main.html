@@ -26,15 +26,15 @@
           <div class="card-body">
             <span class="badge" data-badge="{{ venue.checkins }}">Checkins </span>
             <blockquote>
-                <p>{{ venue.tip }}</p>
-                <cite ng-if="venue.author">- {{ venue.author }}</cite>
+                <p>{{ venue.tip.text }}</p>
+                <cite ng-if="venue.tip.author">- {{ venue.tip.author }}</cite>
             </blockquote>
           </div>
           <div class="card-footer">
               <div class="btn-group btn-group-block">
                   <a class="btn btn-primary" href="{{ venue.url }}" target="_blank">Show</a>
-                  <a class="btn" ng-if="!user_id" href="/login/twitter">{{ venue.checkins }} Will go</a>
-                  <button class="btn" ng-if="user_id" href="#" ng-click="checkIn(venue._id)">{{ venue.checkins }} Will go</button>
+                  <a class="btn" ng-if="!user_id" href="/login/twitter">{{ venue.visits.length }} Will go</a>
+                  <button class="btn" id="{{ 'btn_' + venue._id }}" ng-if="user_id" href="#" ng-click="checkIn(venue._id)">{{ venue.visits.length }} Will go</button>
               </div>
           </div><!-- card footer -->
       </div><!-- card -->
