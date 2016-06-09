@@ -27,13 +27,26 @@ barsquareApp.controller('MainController', function MainController($scope, $http)
         $scope.user_id = user.id;
       }
     });
+  // Locations
+  $scope.latest = [
+    { name: 'Crime', id: 1 },
+    { name: 'Drama', id: 2 },
+    { name: 'Biography', id: 3 },
+    { name: 'Mystery', id: 4 }
+  ];
   // Mini jQuery
   $ = function(element) {
     return angular.element(document.querySelector(element));
-  }
+  };
+  // Clear buttons
+  $scope.closeChip = function(element) {
+    console.log(element);
+    $('#' + element).parent().addClass('hide');
+  };
+  // Go bottom
   var goBottom = function() {
     window.scrollTo(0,document.body.scrollHeight);
-  }
+  };
   // More results
   $scope.moreResults = function() {
     var offset = this.results.length * 4;
@@ -77,10 +90,9 @@ barsquareApp.controller('MainController', function MainController($scope, $http)
   };
   // CheckIn
   $scope.checkIn = function(venue_id) {
-    console.log($scope.user_id + ' check in ' + venue_id);
     $http.post('/api/checkin', {'venue_id': venue_id})
       .success(function(data) {
-        if (data.count) {
+        if (!data.error) {
           $('#btn_' + venue_id).text(data.count + ' Will go');
         }
       })
