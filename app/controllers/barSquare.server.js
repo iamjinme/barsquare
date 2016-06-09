@@ -68,8 +68,8 @@ function BarSquare() {
     var query = url.parse(req.url, true).query
     var offset = parseInt(query.offset || "0");
     var location = req.params.location;
-    //var category = '4bf58dd8d48988d116941735';
-    var category = '4d4b7105d754a06376d81259';
+    var category = '4bf58dd8d48988d116941735';
+    // var category = '4d4b7105d754a06376d81259';
     var bars = [];
     var api_url  = foursquare_path + 'search';
         api_url += '?near=' + location;
@@ -115,10 +115,30 @@ function BarSquare() {
   this.checkIn = function(req, res) {
     var venue_id = req.body.venue_id;
     var date = new Date();
+    var user_id = req.user._id;
+    // Check if user check before
+    function userIn(visit) {
+      var pos = -1;
+      var today = date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear();
+      for(var i in visit) {
+        var visit_date = visit[i].date.getDate() + '.' + visit[i].date.getMonth() + '.' + visit[i].date.getFullYear();
+        if (visit_date === today && visit[i].user_id === user_id) {
+          pos = i;
+          break;
+        }
+      }
+      return pos;
+    };
+    // Find and save checkin information
     Venue.findOne({ '_id': venue_id }, function(err, venue) {
       if (err) throw err;
       if (venue) {
-        venue.visits.push({date: date, user_id: req.user._id});
+        var pos = userIn(venue.visits)
+        if (pos < 0) {
+          venue.visits.push({date: date, user_id: user_id});
+        } else {
+          venue.visits.splice(pos, 1);
+        }
         venue.save();
         res.json({'count': venue.visits.length});
       } else {
