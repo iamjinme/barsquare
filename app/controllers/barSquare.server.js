@@ -79,8 +79,6 @@ function BarSquare() {
         api_url += '&client_id=' + foursquare_client_id;
         api_url += '&client_secret=' + foursquare_client_secret;
     // Check Limit and offset
-    console.log(api_url);
-    console.log(offset, location)
     if (offset >= foursquare_limit) {
       res.json(bars);
       return;
@@ -98,11 +96,9 @@ function BarSquare() {
                        "photo": "/public/img/photo_default.jpg"
           });
         };
-        console.log(bars.length);
         bars = bars.filter(function(value, index) {
           return ((index >= offset) && (index < (offset + 4)));
         });
-        console.log(bars.length);
         if (bars.length) {
           getInfo(bars, 0, function(bars){
             res.json(bars);
