@@ -4,7 +4,7 @@
 
 ## Overview
 
-BarSquare is an full-stack app for coordinate meetings (nightlife) in your city, easy interface, it's support on Clementine.js. This app is a challenge for Back End Certification on FreeCodeCamp.
+BarSquare is an full-stack app for coordinate meetings (nightlife) in your city, easy interface and powered by Foursquare, it's support on Clementine.js. This app is a challenge for Back End Certification on FreeCodeCamp.
 
 The [Free Code Camp](http://www.freecodecamp.com) version of Clementine.js is meant for use when completing projects as part of the FCC curriculum. This version includes GitHub authentication using [Passport](http://passportjs.org/).
 
