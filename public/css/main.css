@@ -42,11 +42,15 @@ form {
 
 .credits {
   text-decoration: none;
-  background: #E0995E;
+  background: #795548;
   color: #fff;
   padding: 5px 10px 5px 10px;
   border-radius: 50px;
   font-weight: bold;
+}
+
+.credits:hover {
+  color: #fff;
 }
 
 .empty-title {
